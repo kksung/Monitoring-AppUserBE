@@ -18,7 +18,7 @@ global:
 #   # - "first_rules.yml"
 #   # - "second_rules.yml"
 
-
+nu
 # 매트릭을 수집할 엔드포인트를 설정. 여기서는 Prometheus 서버 자신을 가리키는 설정을 했다.
 scrape_configs:
   # 이 설정에서 수집한 타임시리즈에 'job=<job_name>'으로 잡의 이름을 설정한다.
@@ -26,4 +26,4 @@ scrape_configs:
     # 'metrics_path'라는 설정의 기본 값은 '/metrics'이고
     # 'scheme'라는 설정의 기본 값은 'http'이다.
     static_configs:
-    - targets: ['localhost:9090']
+    - targets: ['IP:Port']
