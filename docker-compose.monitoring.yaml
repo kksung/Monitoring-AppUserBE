@@ -1,0 +1,36 @@
+version: '3.8'
+
+services:
+  prometheus:
+    image: prom/prometheus-linux-amd64
+    container_name: prometheus_linux
+    volumes:
+      - ./test/prometheus.yml:/etc/prometheus.yml
+    ports:
+      - 9090:9090
+    # command:
+    #   - "--web.enable-lifecycle"
+    restart: always
+    networks:
+      - mybridgenetwork
+    user: root
+
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana_linux
+    volumes:
+      - grafana-storage:/var/lib/grafana
+    restart: always
+    networks:
+      - mybridgenetwork
+    ports:
+      - 3000:3000
+    user: root
+
+volumes:
+  grafana-storage: {}
+
+
+networks:
+  mybridgenetwork:
+    driver: bridge
