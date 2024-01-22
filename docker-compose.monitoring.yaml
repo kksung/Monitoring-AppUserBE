@@ -5,7 +5,7 @@ services:
     image: prom/prometheus-linux-amd64
     container_name: prometheus_linux
     volumes:
-      - ./test/prometheus.yml:/etc/prometheus.yml
+      - ./test/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
     # command:
