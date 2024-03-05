@@ -40,7 +40,7 @@ sudo docker run -d --name=node-exporter -p 9100:9100 prom/node-exporter-linux-am
 
 <br>
 
-<img src="https://github.com/kksung/Monitoring-AppUserBE/assets/110016279/0674ac6e-9461-46ae-a799-4b735879001d" width=900 height=200>
+<img src="https://github.com/kksung/Monitoring-AppUserBE/assets/110016279/0674ac6e-9461-46ae-a799-4b735879001d" width=930 height=200>
 
 - 9100,9101 TG -> Basic Backend Instance
 - 9102 TG -> ASG Backend Instance
@@ -68,7 +68,7 @@ sudo docker-compose -f docker-compose-monitoring.yaml up -d
 
 <br>
 
-<img src="https://github.com/kksung/Monitoring-AppUserBE/assets/110016279/40e832e2-cdfc-451d-b365-c0ff7e721f58" width=650 height=40>
+<img src="https://github.com/kksung/Monitoring-AppUserBE/assets/110016279/40e832e2-cdfc-451d-b365-c0ff7e721f58" width=600 height=40>
 
 - ASG Instance에 접속해서 CPU 100% 부하를 주었을 때
 
@@ -78,11 +78,18 @@ sudo docker-compose -f docker-compose-monitoring.yaml up -d
 
 <br>
 
+<img src="https://github.com/kksung/Monitoring-AppUserBE/assets/110016279/13b9eb85-11ba-46a3-ac5e-264c2f28db3a" width=880 height=380>
+
+- ASG 동적 크기 조정 정책에서 평균 CPU 사용률 -> Default 값인 50%
+- vCPU = 2인 스펙의 인스턴스에서 CPU = 2로 stress, 즉 100%로 주었으므로 scail-out되어 인스턴스가 2개로 실행중인 것 확인
+
+<br>
+
 ## Troubleshooting & 유의사항
 ### 1 - docker-compose 파일 볼륨 설정
 - 볼륨 설정을 ./test/prometheus.yml:/etc/prometheus.yml로 했더니 오류 발생
 
-> Sol) ./test/prometheus.yml:'/etc/prometheus/prometheus.yml'로 설정해야함
+> Sol) ./test/prometheus.yml:'/etc/prometheus/prometheus.yml'로 설정
 
 <br>
 
@@ -95,4 +102,4 @@ sudo docker-compose -f docker-compose-monitoring.yaml up -d
   - scail-out 된다면 대시보드에서 ASG Instance 하나를 고정적으로 모니터링 수행이 불가
   - scail-out 전 ASG Instance 1개에 대해서는 안정적으로 모니터링 수행 가능
 
-> 따라서 Basic Backend Instance 2개만큼은 안정적으로 모니터링 진행
+> 따라서, Basic Backend Instance 2개만큼은 안정적으로 모니터링 수행
