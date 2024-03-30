@@ -83,9 +83,9 @@ sudo docker-compose -f docker-compose-monitoring.yaml up -d
 <img src="https://github.com/kksung/Monitoring-AppUserBE/assets/110016279/13b9eb85-11ba-46a3-ac5e-264c2f28db3a" width=880 height=380>
 
 - ASG 동적 크기 조정 정책에서 평균 CPU 사용률 -> Default 값인 50%
-- vCPU = 2인 스펙의 인스턴스에서 'CPU = 2'로 stress, 즉 100%로 부하를 주었으므로 scail-out되어 인스턴스가 2개로
+- vCPU = 2인 스펙의 인스턴스에서 'CPU = 2'로 stress, 즉 100%로 부하를 주었으므로 scail-out되어
 
-  실행중인 것 확인
+  인스턴스가 2개로 실행중인 것 확인
 
 <br>
 
@@ -98,9 +98,11 @@ sudo docker-compose -f docker-compose-monitoring.yaml up -d
 <br>
 
 ### Why ?
-- 호스트의 './test/prometheus.yml'파일 경로가 컨테이너 내부 경로 '/etc/prometheus.yml'에 Mapping되어야 마운트되어
+- 호스트의 './test/prometheus.yml'파일 경로가 컨테이너 내부 경로 '/etc/prometheus.yml'에 Mapping되어야
 
-  컨테이너가 올바르게 작동하지만, '/test' 디렉터리 경로를 마운트할 경로가 X ('/etc' 경로 이후에 디렉터리 경로 필요)
+  마운트되어 컨테이너가 올바르게 작동하지만, '/test' 디렉터리 경로를 마운트할 경로가 X
+
+  ('/etc' 경로 이후에 디렉터리 경로 필요)
 
 - 즉, '/etc/prometheus/prometheus.yml'로 마운트할 디렉터리 경로를 지정해야 호스트 디렉터리 경로 '/test'가
 
@@ -109,15 +111,17 @@ sudo docker-compose -f docker-compose-monitoring.yaml up -d
 <br>
 
 ### 2 - 'Private IP'를 갖는 인스턴스, 로드밸런서를 통해 메트릭을 가져올 때의 유의사항
-- 로드밸런서를 통해 메트릭을 가져오므로, 로드밸런서 대상그룹에 속해있는 ASG의 Instance같은 경우, scail-out될 때
+- 로드밸런서를 통해 메트릭을 가져오므로, 로드밸런서 대상그룹에 속해있는 ASG의 Instance같은 경우
 
-  대상그룹에 인스턴스가 자동으로 추가되면서 여러 인스턴스를 번갈아가면서 metric을 당겨오게 되는 문제
+  scail-out될 때 대상그룹에 인스턴스가 자동으로 추가되면서 여러 인스턴스를 번갈아가면서 metric을
+
+  당겨오게 되는 문제
   
 - 따라서 scail-out 전 ASG Backend Instance 1개에 대해서는 안정적으로 모니터링 수행이 가능하지만,
 
   scail-out 된다면 대시보드에서 ASG Backend Instance 하나를 고정적으로 모니터링 수행이 불가
 
-> Sol) ASG Backend Instance 2개로만 Backend Instance를 구성했으나, ASG Instance 외 (Basic Backend Instance)를 둠
+> Sol) ASG Backend Instance 2개로만 Backend Instance를 구성했으나, ASG Instance 외 기본 백엔드 서버를 둠
 
 <br>
 
